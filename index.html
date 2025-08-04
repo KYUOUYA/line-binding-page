@@ -1,83 +1,41 @@
-{\rtf1\ansi\ansicpg950\cocoartf2708
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset136 PingFangTC-Regular;\f2\fnil\fcharset0 LucidaGrande;
-}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>綁定中</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h2>綁定中，請稍候...</h2>
 
-\f0\fs24 \cf0 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 <!DOCTYPE html>\
-<html lang="zh-Hant">\
-<head>\
-  <meta charset="UTF-8">\
-  <title>LINE 
-\f1 \'b1\'62\'b8\'b9\'b8\'6a\'a9\'77\'ad\'b6
-\f0 </title>\
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>\
-</head>\
-<body>\
-  <h2>
-\f1 \'b8\'6a\'a9\'77\'a4\'a4\'a1\'41\'bd\'d0\'b5\'79\'ad\'d4
-\f0 ...</h2>\
-\
-  <script>\
-    const LIFF_ID = "
-\f1 \'a7\'41\'aa\'ba
-\f0 MINI_APP_LIFF_ID";  // 
-\f2 \uc0\u8592 
-\f0  
-\f1 \'b4\'c0\'b4\'ab\'a6\'a8\'a7\'41
-\f0  MINI App 
-\f1 \'aa\'ba
-\f0  LIFF ID\
-\
-    async function bindUser() \{\
-      await liff.init(\{ liffId: LIFF_ID \});\
-\
-      if (!liff.isLoggedIn()) \{\
-        liff.login();\
-        return;\
-      \}\
-\
-      const profile = await liff.getProfile();\
-      const userId = profile.userId;\
-      const displayName = profile.displayName;\
-      let email = "";\
-\
-      try \{\
-        const idToken = liff.getIDToken();\
-        const payload = JSON.parse(atob(idToken.split('.')[1]));\
-        email = payload.email || "";\
-      \} catch (e) \{\}\
-\
-      // 
-\f1 \'b6\'c7\'b0\'65\'b8\'ea\'ae\'c6\'a8\'ec\'ab\'e1\'ba\'dd\'a1\'5d\'a5\'69\'a7\'ef\'ac\'b0\'a7\'41\'a6\'db\'a4\'76\'aa\'ba
-\f0  Ragic API 
-\f1 \'a9\'ce
-\f0  Make webhook
-\f1 \'a1\'5e
-\f0 \
-      fetch("https://hook.us1.make.com/
-\f1 \'a7\'41\'aa\'ba
-\f0 _webhook_id", \{\
-        method: "POST",\
-        headers: \{ "Content-Type": "application/json" \},\
-        body: JSON.stringify(\{\
-          line_id: userId,\
-          name: displayName,\
-          email: email\
-        \})\
-      \});\
-\
-      document.body.innerHTML = `<h2>
-\f1 \'b8\'6a\'a9\'77\'a7\'b9\'a6\'a8\'a1\'41\'c1\'c2\'c1\'c2\'b1\'7a\'a1\'49
-\f0 </h2>`;\
-    \}\
-\
-    bindUser();\
-  </script>\
-</body>\
-</html>\
-}
+  <script>
+    const LIFF_ID = "你的LIFF_ID"; // 請改成你的 LIFF ID
+
+    async function bindUser() {
+      await liff.init({ liffId: LIFF_ID });
+
+      if (!liff.isLoggedIn()) {
+        liff.login();
+        return;
+      }
+
+      const profile = await liff.getProfile();
+      const userId = profile.userId;
+      const name = profile.displayName;
+
+      fetch("https://hook.us1.make.com/你的webhook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          line_id: userId,
+          name: name
+        })
+      });
+
+      document.body.innerHTML = `<h2>綁定完成，謝謝您！</h2>`;
+    }
+
+    bindUser();
+  </script>
+</body>
+</html>
