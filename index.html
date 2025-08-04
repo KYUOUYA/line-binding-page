@@ -9,7 +9,7 @@
   <h2>綁定中，請稍候...</h2>
 
   <script>
-    const LIFF_ID = "你的LIFF_ID"; // 請改成你的 LIFF ID
+    const LIFF_ID = "2007865526-3BnXWpzQ"; // 
 
     async function bindUser() {
       await liff.init({ liffId: LIFF_ID });
@@ -23,7 +23,8 @@
       const userId = profile.userId;
       const name = profile.displayName;
 
-      fetch("https://hook.us1.make.com/你的webhook", {
+      // 你可以用以下網址把資料送出到 Make（或之後送到 Ragic）
+      fetch("https://hook.us1.make.com/9643a9cf-06fa-4038-8c21-44bb72386139", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
